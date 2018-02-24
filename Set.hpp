@@ -1,25 +1,25 @@
 #pragma once
 #include "AVLTree.h"
 
-// ³éÏó²ã
+// æŠ½è±¡å±‚
 template<typename T>
 class Set {
 private:
-    // µ×²ã»úÖÆ
+    // åº•å±‚æœºåˆ¶
     AVLTree<T> tree;
-    // ¼¯ºÏ´óĞ¡
+    // é›†åˆå¤§å°
     int set_size = 0;
 public:
     Set() {}
     Set(const Set &set) {
         set_size = set.set_size;
-        // treeĞèÒªÉî¿½±´
+        // treeéœ€è¦æ·±æ‹·è´
         tree = set.tree;
     }
 
     Set &operator=(const Set &a) {
         if (&a != this) {
-            // ¸³ÖµÁ½¸öÔªËØ¼´¿É
+            // èµ‹å€¼ä¸¤ä¸ªå…ƒç´ å³å¯
             set_size = a.set_size;
             tree = a.tree;
         }
@@ -30,13 +30,13 @@ public:
     ~Set() {
         tree.Destroy();
     }
-    // ´İ»Ù
+    // æ‘§æ¯
     bool destroy() {
         set_size = 0;
         return tree.Destroy();
     }
 
-    // ²åÈëÔªËØ
+    // æ’å…¥å…ƒç´ 
     bool insert(const T &val) {
         if (tree.Insert(val)) {
             ++set_size;
@@ -45,7 +45,7 @@ public:
         return false;
     }
 
-    // É¾³ıÔªËØ
+    // åˆ é™¤å…ƒç´ 
     bool remove(const T &val) {
         if (tree.Delete(val)) {
             --set_size;
@@ -53,7 +53,7 @@ public:
         return false;
     }
 
-    // ½»¼¯
+    // äº¤é›†
     Set intersection(const Set &set) {
         std::vector<T*> vec;
         Set<T> result;
@@ -67,21 +67,21 @@ public:
         return result;
     }
 
-    // ²¢¼¯
+    // å¹¶é›†
     Set set_union(Set &set) {
         Set<T> result;
         std::vector<T*> vect;
         tree.get_all_value(vect);
         set.tree.get_all_value(vect);
         for (const T *& pointer : result) {
-            // È«²¿²åÈë£¬¼¯ºÏµÄĞÔÖÊ±£Ö¤²»»á·¢ÉúÖØ¼ü
+            // å…¨éƒ¨æ’å…¥ï¼Œé›†åˆçš„æ€§è´¨ä¿è¯ä¸ä¼šå‘ç”Ÿé‡é”®
             result.insert(*pointer);
         }
 
         return result;
     }
 
-    // ²î¼¯£¬ÔİÇÒÈÏÎªÊÇ
+    // å·®é›†ï¼Œæš‚ä¸”è®¤ä¸ºæ˜¯
     Set difference(const Set &set) {
         std::vector<T*> vect;
         Set<T> result;
@@ -95,23 +95,23 @@ public:
         return result;
     }
 
-    // ¼¯ºÏ´óĞ¡
+    // é›†åˆå¤§å°
     int size() {
         return set_size;
     }
 
-    // ÅĞ¶ÏÔªËØÊÇ·ñÔÚ¼¯ºÏÀï
+    // åˆ¤æ–­å…ƒç´ æ˜¯å¦åœ¨é›†åˆé‡Œ
     bool is_member(const T &val) const{
         return tree.Search(val);
     }
 
-    // ÅĞ¶Ï¸ø¶¨¼¯ºÏÊÇ·ñÊÇ´Ë¼¯ºÏ×Ó¼¯
+    // åˆ¤æ–­ç»™å®šé›†åˆæ˜¯å¦æ˜¯æ­¤é›†åˆå­é›†
     bool subset(const Set &sub_set)const {
         std::vector<T*> vect;
         sub_set.tree.get_all_value(vect);
         for (const T *&pointer : vect) {
             if (!is_member(*pointer)) {
-                // ¸ø³ö¼¯ºÏÖĞÓĞ´Ë¼¯ºÏÃ»ÓĞµÄÔªËØ£¬±íÊ¾²»¿ÉÄÜÊÇ×Ó¼¯
+                // ç»™å‡ºé›†åˆä¸­æœ‰æ­¤é›†åˆæ²¡æœ‰çš„å…ƒç´ ï¼Œè¡¨ç¤ºä¸å¯èƒ½æ˜¯å­é›†
                 return false;
             }
         }
@@ -119,7 +119,7 @@ public:
         return true;
     }
 
-    // ÅĞ¶ÏÁ½¸ö¼¯ºÏ·ñÏàµÈ
+    // åˆ¤æ–­ä¸¤ä¸ªé›†åˆå¦ç›¸ç­‰
     bool equal(const Set &set)const {
 
         if (set.size() != set_size) {
@@ -145,22 +145,22 @@ public:
         tree.get_all_value(vect);
     }
 #pragma region Ovreload
-    // ÖØÔØÊä³ö
+    // é‡è½½è¾“å‡º
     friend std::ostream &operator<<(const std::ostream &os, const Set &set) {
 
     }
 
-    // ÖØÔØÏàµÈÔËËã·û
+    // é‡è½½ç›¸ç­‰è¿ç®—ç¬¦
     friend bool operator==(const Set &a, const Set &b) {
         return a.equal(b);
     }
 
-    // ÖØÔØ²¢¼¯
+    // é‡è½½å¹¶é›†
     friend Set operator+(const Set &a, const Set &b) {
         return a.set_union(b);
     }
 
-    // ÖØÔØ+=
+    // é‡è½½+=
     Set &operator+=(const Set a) {
         std::vector<ID*> values;
         a.get_all_value(values);

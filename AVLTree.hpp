@@ -7,9 +7,9 @@
 
 template<typename T>
 using Traverse = void(*)(const T &val);
-// Ê¹ÓÃID±íÊ¾ÈË£¬´æ´¢¿ªÏú±È½ÏĞ¡
+// ä½¿ç”¨IDè¡¨ç¤ºäººï¼Œå­˜å‚¨å¼€é”€æ¯”è¾ƒå°
 using ID = long;
-// ×îµ×²ã
+// æœ€åº•å±‚
 template<typename T>
 class AVLTree {
 private:
@@ -21,9 +21,9 @@ private:
 
         explicit Node(const T &value) : value(value) {}
     };
-    // Ê÷¸ù
+    // æ ‘æ ¹
     Node *head = nullptr;
-    // ²éÕÒÊ§°ÜµÄ·µ»ØÖµµÈÓÚ-1
+    // æŸ¥æ‰¾å¤±è´¥çš„è¿”å›å€¼ç­‰äº-1
     T none;
     bool destroy(Node *&node) {
         if (node != nullptr) {
@@ -53,32 +53,32 @@ private:
         return node == nullptr ? 0 : node->height;
     }
 
-    //  Ïò×óĞı×ªº¯Êı
+    //  å‘å·¦æ—‹è½¬å‡½æ•°
     void l_rotate(Node *&node) {
         if (node != nullptr) {
             Node *right = node->right;
             node->right = right->left;
             right->left = node;
-            // µ÷Õûnode¸ß¶È
+            // è°ƒæ•´nodeé«˜åº¦
             node->height = std::max(get_height(node->left), get_height(node->right)) + 1;
-            // µ÷Õûright¸ß¶È
+            // è°ƒæ•´righté«˜åº¦
             right->height = std::max(get_height(right->left), get_height(right->right)) + 1;
-            // node½»½Ó
+            // nodeäº¤æ¥
             node = right;
         }
     }
 
-    // ÏòÓÒĞı×ªº¯Êı
+    // å‘å³æ—‹è½¬å‡½æ•°
     void r_rotate(Node *&node) {
         if (node != nullptr) {
             Node *left = node->left;
             node->left = left->right;
             left->right = node;
-            // node¸ß¶È
+            // nodeé«˜åº¦
             node->height = std::max(get_height(node->left), get_height(node->right)) + 1;
-            // left¸ß¶È
+            // lefté«˜åº¦
             left->height = std::max(get_height(left->left), get_height(left->right)) + 1;
-            // ½»½Ó
+            // äº¤æ¥
             node = left;
         }
     }
@@ -95,19 +95,19 @@ private:
         else if (node->value < val) {
             inserted = insert(node->right, val);
         }
-        // Ã»ÓĞ²åÈë²»¿¼ÂÇĞı×ª
+        // æ²¡æœ‰æ’å…¥ä¸è€ƒè™‘æ—‹è½¬
         if (!inserted) {
             return false;
         }
 
-        // ÏÈÈ¡µÃ¸ß¶È
+        // å…ˆå–å¾—é«˜åº¦
         int left_height = get_height(node->left);
         int right_height = get_height(node->right);
         node->height = std::max(left_height, right_height) + 1;
 
         if (left_height - right_height == 2) {
-            // ×ó±ß±ÈÓÒ±ß¸ß2£¬²åÈëµ½ÁË×ó±ß
-            // ×ó×ó£¬ÓÒÒÆÒ»´Î¼´¿É
+            // å·¦è¾¹æ¯”å³è¾¹é«˜2ï¼Œæ’å…¥åˆ°äº†å·¦è¾¹
+            // å·¦å·¦ï¼Œå³ç§»ä¸€æ¬¡å³å¯
             if (val < node->left->value) {
                 r_rotate(node);
             }
@@ -117,7 +117,7 @@ private:
             }
         }
         else if (right_height - left_height == 2) {
-            // ÓÒ²à±È×ó²à¸ß2
+            // å³ä¾§æ¯”å·¦ä¾§é«˜2
             if (val > node->right->value) {
                 l_rotate(node);
             }
@@ -126,7 +126,7 @@ private:
                 l_rotate(node);
             }
         }
-        // Ğı×ª¹ıºó
+        // æ—‹è½¬è¿‡å
         left_height = get_height(node->left);
         right_height = get_height(node->right);
         node->height = std::max(left_height, right_height) + 1;
@@ -171,53 +171,53 @@ private:
         node->height = std::max(get_height(node->left), get_height(node->right)) + 1;
     }
 
-    // É¾³ı²Ù×÷
+    // åˆ é™¤æ“ä½œ
     bool _delete(Node *&node, const T &val) {
-        // ¿ÕÖ¸Õë·µ»ØÉ¾³ıÊ§°Ü
+        // ç©ºæŒ‡é’ˆè¿”å›åˆ é™¤å¤±è´¥
         if (node == nullptr) {
             return false;
         }
-        // ±ê¼ÇÊÇ·ñÉ¾³ı³É¹¦
+        // æ ‡è®°æ˜¯å¦åˆ é™¤æˆåŠŸ
         bool deleted = false;
         if (node->value == val) {
-            // ×óÓÒ²àÎª¿Õ£¬Ò¶×Ó½ÚµãÇé¿ö
+            // å·¦å³ä¾§ä¸ºç©ºï¼Œå¶å­èŠ‚ç‚¹æƒ…å†µ
             if (node->left == nullptr && node->right == nullptr) {
-                // Ö±½ÓÉ¾³ı
+                // ç›´æ¥åˆ é™¤
                 delete(node);
                 node = nullptr;
             }
             else if (node->right == nullptr) {
-                // ÓÒ²àÎª¿Õ£¬×ó²à²»Îª¿Õ£¬Ö±½Ó½«×ó²àµÄ½ÓÉÏÀ´
+                // å³ä¾§ä¸ºç©ºï¼Œå·¦ä¾§ä¸ä¸ºç©ºï¼Œç›´æ¥å°†å·¦ä¾§çš„æ¥ä¸Šæ¥
                 Node *left = node->left;
                 delete(node);
-                // left²»ĞèÒªµ÷Õû¸ß¶È
+                // leftä¸éœ€è¦è°ƒæ•´é«˜åº¦
                 node = left;
             }
             else if (node->left == nullptr) {
-                // ÓÒ²à²»Îª¿Õ£¬×ó²àÎª¿ÕÇé¿ö
+                // å³ä¾§ä¸ä¸ºç©ºï¼Œå·¦ä¾§ä¸ºç©ºæƒ…å†µ
                 Node *right = node->right;
                 delete(node);
-                // ²»ĞèÒªµ÷Õû¸ß¶È
+                // ä¸éœ€è¦è°ƒæ•´é«˜åº¦
                 node = right;
             }
             else {
-                // ×óÓÒ¶¼²»Îª¿Õ
-                // Ñ°ÕÒ×ó×Ó½Úµã×îÓÒ½áµã
+                // å·¦å³éƒ½ä¸ä¸ºç©º
+                // å¯»æ‰¾å·¦å­èŠ‚ç‚¹æœ€å³ç»“ç‚¹
                 Node *pri = node->left;
                 Node *swap = pri->right;
-                // Èç¹ûleftÓÒ²àÖ±½ÓÎª¿ÕÖ±½Ó½»»»
+                // å¦‚æœleftå³ä¾§ç›´æ¥ä¸ºç©ºç›´æ¥äº¤æ¢
                 if (swap == nullptr) {
                     Node *temp = node;
                     pri->right = node->right;
                     node = pri;
                     delete(temp);
-                    // Ö±½Ó½ÓÉÏÈ¥Ê±¼ÆËã¸ß¶È
+                    // ç›´æ¥æ¥ä¸Šå»æ—¶è®¡ç®—é«˜åº¦
                     int left_h = get_height(node->left);
                     int right_h = get_height(node->right);
                     node->height = std::max(left_h, right_h) + 1;
 
                     if (right_h - left_h == 2) {
-                        // ²é¿´ÓÒ²àÊÇ·ñ¿ÉÒÔĞı×ª
+                        // æŸ¥çœ‹å³ä¾§æ˜¯å¦å¯ä»¥æ—‹è½¬
                         int l = get_height(node->right->left);
                         int r = get_height(node->right->right);
                         if (l <= r) {
@@ -234,7 +234,7 @@ private:
                     node->height = std::max(left_h, right_h) + 1;
                 }
                 else {
-                    // Ê¹ÓÃÕ»À´´æ´¢½áµã£¬»Ö¸´ÕıÈ·¸ß¶È
+                    // ä½¿ç”¨æ ˆæ¥å­˜å‚¨ç»“ç‚¹ï¼Œæ¢å¤æ­£ç¡®é«˜åº¦
                     std::stack<Node*> nodes;
                     nodes.push(pri);
                     while (swap->right != nullptr) {
@@ -242,13 +242,13 @@ private:
                         nodes.push(pri);
                         swap = swap->right;
                     }
-                    // priÓÒ²à±äÎªswap×ó²à£¬µ÷Õû¸ß¶È
+                    // priå³ä¾§å˜ä¸ºswapå·¦ä¾§ï¼Œè°ƒæ•´é«˜åº¦
                     pri->right = swap->left;
                     swap->left = node->left;
                     swap->right = node->right;
                     delete(node);
                     node = swap;
-                    // µ÷ÕûÏÂÃæµÄ¸ß¶È
+                    // è°ƒæ•´ä¸‹é¢çš„é«˜åº¦
                     while (!nodes.empty()) {
                         Node *n = nodes.top();
                         nodes.pop();
@@ -257,16 +257,16 @@ private:
                         n->height = std::max(left_height, right_height) + 1;
                     }
                     Node *left = node->left;
-                    // µ÷Õûswap¼´node¸ß¶È
+                    // è°ƒæ•´swapå³nodeé«˜åº¦
                     int left_height = get_height(node->left);
                     int right_height = get_height(node->right);
                     node->height = std::max(left_height, right_height) + 1;
-                    // µ÷Õû¸ß¶È£¬´ÓÏÂµ½ÉÏµ÷Õû
-                    // priÓĞ¿ÉÄÜÊ§È¥Æ½ºâ£¬´ÓÏÂµ½ÉÏµ÷Õû¸ß¶È
+                    // è°ƒæ•´é«˜åº¦ï¼Œä»ä¸‹åˆ°ä¸Šè°ƒæ•´
+                    // priæœ‰å¯èƒ½å¤±å»å¹³è¡¡ï¼Œä»ä¸‹åˆ°ä¸Šè°ƒæ•´é«˜åº¦
                     if (pri != left) {
                         balance_pri(pri, left->right);
                     }
-                    // ×ó²àÉÙÁËÒ»¸öÓĞ¿ÉÄÜnode->leftÊ§È¥Æ½ºâ
+                    // å·¦ä¾§å°‘äº†ä¸€ä¸ªæœ‰å¯èƒ½node->leftå¤±å»å¹³è¡¡
                     left_height = get_height(left->left);
                     right_height = get_height(left->right);
                     left->height = std::max(left_height, right_height) + 1;
@@ -284,7 +284,7 @@ private:
                     left_height = get_height(node->left);
                     right_height = get_height(node->right);
                     node->height = std::max(left_height, right_height) + 1;
-                    // ½«nodeÆ½ºâ
+                    // å°†nodeå¹³è¡¡
                     if (right_height - left_height == 2) {
                         int l = get_height(node->right->left);
                         int r = get_height(node->right->right);
@@ -301,7 +301,7 @@ private:
                     node->height = std::max(left_height, right_height) + 1;
                 }
             }
-            // µ½´ï´Ë´¦±íÊ¾É¾³ı³É¹¦
+            // åˆ°è¾¾æ­¤å¤„è¡¨ç¤ºåˆ é™¤æˆåŠŸ
             return true;
         }
         else if (node->value > val) {
@@ -314,14 +314,14 @@ private:
         if (!deleted) {
             return false;
         }
-        // É¾³ıÁËµÄ»°ĞèÒªµ÷Õû±£³ÖÊ÷µÄÆ½ºâ
+        // åˆ é™¤äº†çš„è¯éœ€è¦è°ƒæ•´ä¿æŒæ ‘çš„å¹³è¡¡
         int left_height = get_height(node->left);
         int right_height = get_height(node->right);
         node->height = std::max(left_height, right_height) + 1;
 
-        // É¾³ıÒ»¸ö½áµã¸ß¶È²»¿ÉÄÜ½µµÍ2£¬×î¶à1
+        // åˆ é™¤ä¸€ä¸ªç»“ç‚¹é«˜åº¦ä¸å¯èƒ½é™ä½2ï¼Œæœ€å¤š1
         if (left_height - right_height == 2) {
-            // ×ó²à±ÈÓÒ²à¸ßÁ½¸ö¸ß¶È£¬Ö»¿ÉÄÜÊÇÓÒ²àÉ¾³ı
+            // å·¦ä¾§æ¯”å³ä¾§é«˜ä¸¤ä¸ªé«˜åº¦ï¼Œåªå¯èƒ½æ˜¯å³ä¾§åˆ é™¤
             Node *left = node->left;
             int left_h = get_height(left->left);
             int right_h = get_height(left->right);
@@ -334,7 +334,7 @@ private:
             }
         }
         else if (right_height - left_height == 2) {
-            // ÓÒ²àÆ«¸ß£¬Ö»ÄÜÊÇ×ó²àÉ¾³ı
+            // å³ä¾§åé«˜ï¼Œåªèƒ½æ˜¯å·¦ä¾§åˆ é™¤
             Node *right = node->right;
             int left_h = get_height(right->left);
             int right_h = get_height(right->right);
@@ -353,7 +353,7 @@ private:
         return true;
     }
 
-    // ±éÀú
+    // éå†
     void traverse(const Node *node, const Traverse<T> &func) {
         if (node != nullptr) {
             traverse(node->left, func);
@@ -365,12 +365,12 @@ private:
     void get_all(std::vector<T*> &vect, Node *node)const {
         if (node != nullptr) {
             get_all(vect, node->left);
-            // »ñÈ¡Ö¸Õë
+            // è·å–æŒ‡é’ˆ
             vect.push_back(&node->value);
             get_all(vect, node->right);
         }
     }
-    // »ñÈ¡¸ß¶È
+    // è·å–é«˜åº¦
     int get_h(const Node *node) {
         if (node != nullptr) {
             return std::max(get_h(node->left), get_h(node->right)) + 1;
@@ -381,7 +381,7 @@ private:
 
     void display(Node *node) const {
         Node *nt = node;
-        // ²ã´Î´òÓ¡
+        // å±‚æ¬¡æ‰“å°
         std::vector<Node*> *nodes1 = new std::vector<Node*>();
         std::vector<Node*> *nodes2 = new std::vector<Node*>();
         if (head != nullptr) {
@@ -428,11 +428,11 @@ private:
         return true;
     }
 
-    // Éî¿½±´
+    // æ·±æ‹·è´
     void copy(const Node *src, Node *&dst) {
         if (src != nullptr) {
             dst = new Node(src->value);
-            // ¸ß¶ÈĞÅÏ¢¼ÇµÃ¸´ÖÆ
+            // é«˜åº¦ä¿¡æ¯è®°å¾—å¤åˆ¶
             dst->height = src->height;
             copy(src->left, dst->left);
             copy(src->right, dst->right);
@@ -453,62 +453,62 @@ private:
     }
 public:
     AVLTree(){}
-    // Éî¿½±´
+    // æ·±æ‹·è´
     AVLTree(const AVLTree &tree) {
-        // ¿½±´Õû¿ÃÊ÷
+        // æ‹·è´æ•´æ£µæ ‘
         copy(tree.head, head);
     }
 
-    // ÖØÔØ¸³Öµ=
+    // é‡è½½èµ‹å€¼=
     AVLTree &operator=(const AVLTree &tree) {
         if (&tree != this) {
-            // ½«Ê÷Çå¿Õ
+            // å°†æ ‘æ¸…ç©º
             Destroy();
-            // ½«²ÎÊıµÄÊ÷¸´ÖÆ¹ıÀ´
+            // å°†å‚æ•°çš„æ ‘å¤åˆ¶è¿‡æ¥
             copy(tree.head, head);
         }
-        // ·µ»ØÒıÓÃ
+        // è¿”å›å¼•ç”¨
         return *this;
     }
 
-    // Îö¹¹º¯Êı
+    // ææ„å‡½æ•°
     ~AVLTree() {
         destroy(head);
     }
 
-    // Ïú»ÙÊ÷
+    // é”€æ¯æ ‘
     bool Destroy() {
         return destroy(head);
     }
 
-    // ËÑË÷ÔªËØ
+    // æœç´¢å…ƒç´ 
     bool Search(const T &val) const{
         return search(head, val);
     }
 
-    // ²åÈëÔªËØ
+    // æ’å…¥å…ƒç´ 
     bool Insert(const T &val) {
         return insert(head, val);
 
     }
 
-    // ²åÈëÔªËØ
+    // æ’å…¥å…ƒç´ 
     bool Delete(const T &val) {
         return _delete(head, val);
     }
 
-    // ±éÀúÊ÷
+    // éå†æ ‘
     bool Traverse(const Traverse<T> &func) {
         return  traverse(head, func);
     }
 
-    // »ñÈ¡ËùÓĞÔªËØµÄÖ¸Õë
+    // è·å–æ‰€æœ‰å…ƒç´ çš„æŒ‡é’ˆ
     void get_all_value(std::vector<T*> &vec) const {
         vec.clear();
         get_all(vec, head);
     }
 
-    // ÅĞ¶ÏÊÇ·ñÆ½ºâ
+    // åˆ¤æ–­æ˜¯å¦å¹³è¡¡
     bool is_balance() {
         return is_balance(head);
     }
@@ -517,10 +517,10 @@ public:
         return find_by_id(head, id);
     }
 
-    // ÏÔÊ¾ËùÓĞÔªËØ
+    // æ˜¾ç¤ºæ‰€æœ‰å…ƒç´ 
     void display() const {
         Node *nt = head;
-        // ²ã´Î´òÓ¡
+        // å±‚æ¬¡æ‰“å°
         std::vector<Node*> *nodes1 = new std::vector<Node*>();
         std::vector<Node*> *nodes2 = new std::vector<Node*>();
         if (head != nullptr) {

@@ -2,81 +2,81 @@
 
 #include "Set.h"
 
-// Ê¹ÓÃint±êÊ¶Ï²ºÃ
+// ä½¿ç”¨intæ ‡è¯†å–œå¥½
 using Hobby = std::string;
-// Ê¹ÓÃstring±íÊ¾Ãû³Æ
+// ä½¿ç”¨stringè¡¨ç¤ºåç§°
 using Name = std::string;
 
 class Person {
 private:
-    // Î¨Ò»±êÊ¶id
+    // å”¯ä¸€æ ‡è¯†id
     ID id = -1;
-    // Ãû³Æ
+    // åç§°
     Name name = "-1";
-    // Ï²ºÃ£¬Ê¹ÓÃstringÄ£Äâ
+    // å–œå¥½ï¼Œä½¿ç”¨stringæ¨¡æ‹Ÿ
     Set<Hobby> hobbies;
-    // ¹Ø×¢µÄÈË
+    // å…³æ³¨çš„äºº
     Set<ID> watches;
-    // ·ÛË¿¼¯
+    // ç²‰ä¸é›†
     Set<ID> fans;
 public:
-    // Ä¬ÈÏ¹¹Ôìº¯Êı
+    // é»˜è®¤æ„é€ å‡½æ•°
     Person(){}
-    // º¬²Î¹¹Ôìº¯Êı
+    // å«å‚æ„é€ å‡½æ•°
     Person(const ID &id, const Name &name):id(id), name(name){}
 
-    // »ñÈ¡ÈËµÄid
+    // è·å–äººçš„id
     ID get_id() const {
         return id;
     }
 
-    // ÉèÖÃid
+    // è®¾ç½®id
     void set_id(const ID &id) {
         this->id = id;
     }
 
-    // »ñÈ¡Ãû³Æ
+    // è·å–åç§°
     Name get_name()const {
         return name;
     }
 
-    // »ñÈ¡Ò»¸öÈËµÄÏ²ºÃ
+    // è·å–ä¸€ä¸ªäººçš„å–œå¥½
     Set<Hobby> get_hobbies() const {
         return hobbies;
     }
 
-    // »ñÈ¡Æä¹Ø×¢µÄÈË
+    // è·å–å…¶å…³æ³¨çš„äºº
     Set<ID> get_watches()const {
         return watches;
     }
 
-    // »ñÈ¡·ÛË¿¼¯
+    // è·å–ç²‰ä¸é›†
     Set<ID> get_fans() const{
         return fans;
     }
 
-    // È¡Ïû¹Ø×¢
+    // å–æ¶ˆå…³æ³¨
     bool cancel_watch(const ID &other_person) {
-        // ³¢ÊÔÉ¾³ı²¢·µ»ØÉ¾³ı½á¹û
+        // å°è¯•åˆ é™¤å¹¶è¿”å›åˆ é™¤ç»“æœ
         return watches.remove(other_person);
     }
 
-    // ¹Ø×¢Ä³ÈË
+    // å…³æ³¨æŸäºº
     bool add_watch(const ID &other_person) {
-        // ²»ÔÊĞí¹Ø×¢×Ô¼º
+        // ä¸å…è®¸å…³æ³¨è‡ªå·±
         if (other_person != id) {
             return watches.insert(other_person);
         }
-        // ³¢ÊÔ¹Ø×¢×Ô¼º£¬·µ»Ø´íÎó
+        // å°è¯•å…³æ³¨è‡ªå·±ï¼Œè¿”å›é”™è¯¯
         return false;
     }
 
-    // ÒÆ³ı·ÛË¿
+    // ç§»é™¤ç²‰ä¸
     bool remove_fans(const ID &other_person) {
         return fans.remove(other_person);
     }
 
-    // Ìí¼Ó·ÛË¿£¬½öÔÚ³õÊ¼»¯Ê±Ê¹ÓÃ
+    // æ·»åŠ ç²‰ä¸ï¼Œä»…åœ¨åˆå§‹åŒ–æ—¶ä½¿ç”¨
     bool add_funs(const ID &other_person) {
         if (other_person != id) {
             return fans.insert(other_person);
@@ -84,19 +84,19 @@ public:
         return false;
     }
 
-    // Ìí¼Ó°®ºÃ
+    // æ·»åŠ çˆ±å¥½
     bool add_hobby(const Hobby &like) {
-        // ³¢ÊÔ¼ÓÈë²¢·µ»ØÌí¼Ó½á¹û
+        // å°è¯•åŠ å…¥å¹¶è¿”å›æ·»åŠ ç»“æœ
         return hobbies.insert(like);
     }
 
-    // É¾³ı°®ºÃ
+    // åˆ é™¤çˆ±å¥½
     bool remove_hobby(const Hobby &like) {
         return hobbies.remove(like);
     }
 
 #pragma region Ovreload
-    // ÖØÔØ<ÔËËã·û
+    // é‡è½½<è¿ç®—ç¬¦
     friend bool operator<(const Person &a, const Person &b) {
         return a.id < b.id;
     }
@@ -107,7 +107,7 @@ public:
         return a_id < a.id;
     }
 
-    // ÖØÔØ>ÔËËã·û
+    // é‡è½½>è¿ç®—ç¬¦
     friend bool operator>(const Person &a, const Person &b) {
         return a.id > b.id;
     }
@@ -118,26 +118,26 @@ public:
         return a_id > a.id;
     }
 
-    // ÖØÔØ==ÔËËã·û
+    // é‡è½½==è¿ç®—ç¬¦
     friend bool operator==(const Person &a, const Person &b) {
         return a.id == b.id;
     }
 
-    // ÖØÔØ==ÔËËã·û
+    // é‡è½½==è¿ç®—ç¬¦
     friend bool operator==(const Person &a, const ID &a_id) {
         return a.id == a_id;
     }
 
-    // ¸ù¾İ¶Ô³ÆĞÔ£¬»¹ĞèÖØÔØÒ»´Î==
+    // æ ¹æ®å¯¹ç§°æ€§ï¼Œè¿˜éœ€é‡è½½ä¸€æ¬¡==
     friend bool operator==(const ID &a_id, const Person &a) {
         return a_id == a.id;
     }
 
-    // ÖØÔØ!=ÔËËã·û
+    // é‡è½½!=è¿ç®—ç¬¦
     friend bool operator!=(const Person &a, const Person &b) {
         return a.id != b.id;
     }
-    // ÖØÔØÊä³öÔËËã·û
+    // é‡è½½è¾“å‡ºè¿ç®—ç¬¦
     friend std::ostream &operator<<(std::ostream &os, const Person &a) {
         os << "ID: " << a.id << ", name: " << a.name;
 
