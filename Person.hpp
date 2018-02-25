@@ -1,12 +1,13 @@
 #pragma once
 
-#include "Set.h"
+#include "Set.hpp"
 
 // 使用int标识喜好
 using Hobby = std::string;
 // 使用string表示名称
 using Name = std::string;
 
+// Peorson类型定义，不需要使用泛型了
 class Person {
 private:
     // 唯一标识id
@@ -28,11 +29,6 @@ public:
     // 获取人的id
     ID get_id() const {
         return id;
-    }
-
-    // 设置id
-    void set_id(const ID &id) {
-        this->id = id;
     }
 
     // 获取名称
@@ -122,13 +118,9 @@ public:
     friend bool operator==(const Person &a, const Person &b) {
         return a.id == b.id;
     }
-
-    // 重载==运算符
     friend bool operator==(const Person &a, const ID &a_id) {
         return a.id == a_id;
     }
-
-    // 根据对称性，还需重载一次==
     friend bool operator==(const ID &a_id, const Person &a) {
         return a_id == a.id;
     }
@@ -137,10 +129,10 @@ public:
     friend bool operator!=(const Person &a, const Person &b) {
         return a.id != b.id;
     }
+
     // 重载输出运算符
     friend std::ostream &operator<<(std::ostream &os, const Person &a) {
         os << "ID: " << a.id << ", name: " << a.name;
-
         return os;
     }
 #pragma endregion
