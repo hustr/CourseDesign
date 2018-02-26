@@ -33,8 +33,6 @@ private:
 
     // 树根
     Node *head = nullptr;
-    // 查找失败的返回值
-    T none;
 
     // 销毁
     bool destroy(Node *&node) {
@@ -515,19 +513,19 @@ private:
     }
 
     // 根据id寻找节点
-    T &find_by_id(Node *&node, const ID &id) {
+    T &find_by_id(Node *&node, const ID &id, T &defau) {
         if (node != nullptr) {
             // 同搜索
             if (node->value > id) {
-                return find_by_id(node->left, id);
+                return find_by_id(node->left, id, defau);
             }
             else if (node->value < id) {
-                return find_by_id(node->right, id);
+                return find_by_id(node->right, id, defau);
             }
             return node->value;
         }
-        // 搜索失败返回默认值none
-        return none;
+        // 搜索失败返回默认值默认值
+        return defau;
     }
 public:
     // 默认构造函数
@@ -595,8 +593,8 @@ public:
     }
 
     // 通过id搜索值的引用
-    T &find_by_id(const ID &id) {
-        return find_by_id(head, id);
+    T &find_by_id(const ID &id, T &defau) {
+        return find_by_id(head, id, defau);
     }
 
     // 显示所有元素

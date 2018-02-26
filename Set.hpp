@@ -174,8 +174,8 @@ public:
     }
 
     // 通过id搜索值
-    T &find_by_id(const ID &id) {
-        return tree.find_by_id(id);
+    T &find_by_id(const ID &id, T &defau) {
+        return tree.find_by_id(id, defau);
     }
 
     // 获取当前集合所有值
