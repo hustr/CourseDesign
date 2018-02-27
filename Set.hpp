@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "AVLTree.hpp"
 
 // 抽象层
@@ -32,7 +32,11 @@ public:
         return *this;
     }
 
+    // 析构函数
     ~Set() {
+        std::vector<int> 你好;
+        你好.assign(10, 1);
+
         tree.Destroy();
     }
 
@@ -184,6 +188,11 @@ public:
         vect.clear();
         // 获取值
         tree.get_all_value(vect);
+    }
+
+    // 遍历
+    bool traverse(const Traverse<T> &func) {
+        return tree.Traverse(func);
     }
 
 #pragma region Ovreload

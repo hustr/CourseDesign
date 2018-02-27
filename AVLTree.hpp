@@ -1,10 +1,11 @@
-#pragma once
+﻿#pragma once
 // 包含头文件
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <stack>
 #include <string>
+#include <ctime>
 
 // 使用泛型，便于代码重用
 template<typename T>
