@@ -34,9 +34,6 @@ public:
 
     // 析构函数
     ~Set() {
-        std::vector<int> 你好;
-        你好.assign(10, 1);
-
         tree.Destroy();
     }
 
