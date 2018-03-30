@@ -170,7 +170,7 @@ bool sign_up() {
     // 新建person变量
     Person p(++max_id, name);
     // 尝试插入并返回结果
-    // std::cout << p;
+    std::cout << "Add " << p << "\n";
     return users.insert(p);
 }
 

@@ -84,7 +84,7 @@ int main() {
             std::cin >> my_id;
             // 调用函数
             person_set = get_watches(my_id);
-            std::cout << "Get << " << get_name(my_id) << "'s watches: \n";
+            std::cout << "Get  " << get_name(my_id) << "'s watches: \n";
             // 输出
             print_person(person_set);
             wait();
@@ -146,11 +146,11 @@ int main() {
             // 添加成功或者失败的操作
             if (add_watch(my_id, b_id)) {
                 std::cout << "Insert " << get_name(b_id) << " into " <<
-                    get_name(a_id) << "'s watches OK.\n";
+                    get_name(my_id) << "'s watches OK.\n";
             }
             else {
                 std::cout << "Insert " << get_name(b_id) << " into " <<
-                    get_name(a_id) << "'s watches  ERROR.\n";
+                    get_name(my_id) << "'s watches  ERROR.\n";
             }
             wait();
             break;
